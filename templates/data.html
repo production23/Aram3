@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Sample and Crime Data</title>
+</head>
+<body>
+    <h1>Random Sample</h1>
+    <button id="getSampleBtn">Get Random Sample</button>
+    <p id="sample"></p>
+
+    <h1>Crime Data</h1>
+    <button id="getCrimeDataBtn">Get Crime Data</button>
+    <div id="crimeData"></div>
+
+    <script>
+        document.getElementById('getSampleBtn').addEventListener('click', function() {
+            fetch('/random-sample')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('sample').innerText = 'Random Sample: ' + data.join(', ');
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('getCrimeDataBtn').addEventListener('click', function() {
+            fetch('/crime-data')
+                .then(response => response.json())
+                .then(data => {
+                    let crimeDataDiv = document.getElementById('crimeData');
+                    crimeDataDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
